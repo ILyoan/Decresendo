@@ -1,3 +1,6 @@
 [submodule "closure-library"]
 	path = closure-library
 	url = https://github.com/google/closure-library.git
+[submodule "MIDI.js"]
+	path = MIDI.js
+	url = https://github.com/mudcube/MIDI.js.git
