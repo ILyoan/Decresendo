@@ -1,0 +1,111 @@
+<html>
+<head>
+<!-- jquery -->
+<script src='jquery/jquery.min.js'></script>
+<!-- midi.js package -->
+<script src='./MIDI.js/js/MIDI/AudioDetect.js'></script>
+<script src='./MIDI.js/js/MIDI/LoadPlugin.js'></script>
+<script src='./MIDI.js/js/MIDI/Plugin.js'></script>
+<script src='./MIDI.js/js/MIDI/Player.js'></script>
+<script src="./MIDI.js/js/Window/DOMLoader.XMLHttp.js" type="text/javascript"></script>
+<!-- extras -->
+<script src='./MIDI.js/inc/Base64.js'></script>
+<script src='./MIDI.js/inc/base64binary.js'></script>
+<style>
+div.note {
+	float: left;
+	margin: 5px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+}
+
+div.note#C {
+	background-color: red;
+}
+div.note#D {
+	background-color: orange;
+}
+div.note#E {
+	background-color: yellow;
+}
+div.note#F {
+	background-color: green;
+}
+div.note#G {
+	background-color: blue;
+}
+div.note#A {
+	background-color: darkblue;
+}
+div.note#B {
+	background-color: purple;
+}
+</style>
+</head>
+<body>
+	<div class='note' id='C'>C</div>
+	<div class='note' id='D'>D</div>
+	<div class='note' id='E'>E</div>
+	<div class='note' id='F'>F</div>
+	<div class='note' id='G'>G</div>
+	<div class='note' id='A'>A</div>
+	<div class='note' id='B'>B</div>
+
+<script type='text/javascript'>
+
+window.onload = function() {
+	MIDI.loadPlugin({
+		soundfontUrl: './MIDI.js/soundfont/',
+		instrument: 'acoustic_grand_piano',
+		callback: initApplication,
+	});
+}
+
+function initApplication() {
+	$('.note').mousedown(function() {
+		$(this).css('opacity', '0.5');
+		onNoteOn(getNoteNumber($(this).attr('id')));
+	});
+	$('.note').mouseup(function() {
+		$(this).css('opacity', '1');
+		onNoteOff(getNoteNumber($(this).attr('id')));
+	});
+	$('.note').mouseout(function() {
+		$(this).css('opacity', '1');
+		onNoteOff(getNoteNumber($(this).attr('id')));
+	});
+}
+
+function onNoteOn(note) {
+	var delay = 0;
+	var velocity = 127;
+	MIDI.setVolume(0, 127);
+	MIDI.noteOn(0, note, velocity, delay);
+}
+
+function onNoteOff(note) {
+	var delay = 0.5;
+	MIDI.noteOff(0, note, delay);
+}
+
+function getNoteNumber(note) {
+	switch (note) {
+		case 'C': return 52;
+		case 'D': return 54;
+		case 'E': return 56;
+		case 'F': return 57;
+		case 'G': return 59;
+		case 'A': return 61;
+		case 'B': return 63;
+	}
+	return 61;
+}
+
+</script>
+
+</body>
+</html>
