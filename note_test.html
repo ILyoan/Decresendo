@@ -58,7 +58,7 @@ div.note#B {
 <script type='text/javascript'>
 
 window.onload = function() {
-	MIDI.loadPlugin({
+	MIDI.WebMIDI.connect({
 		soundfontUrl: './MIDI.js/soundfont/',
 		instrument: 'acoustic_grand_piano',
 		callback: initApplication,
@@ -78,6 +78,9 @@ function initApplication() {
 		$(this).css('opacity', '1');
 		onNoteOff(getNoteNumber($(this).attr('id')));
 	});
+
+	var input = MIDI.getInput()[0];
+	input.onmidimessage = MIDIMessageEventHandler;
 }
 
 function onNoteOn(note) {
@@ -103,6 +106,19 @@ function getNoteNumber(note) {
 		case 'B': return 63;
 	}
 	return 61;
+}
+
+function MIDIMessageEventHandler(event) {
+	switch (event.data[0] & 0xf0) {
+		case 0x90:
+			if (event.data[2] != 0) {
+				onNoteOn(event.data[1]);
+				return;
+			}
+		case 0x80:
+			noteOff(event.data[1]);
+			return;
+	}
 }
 
 </script>
