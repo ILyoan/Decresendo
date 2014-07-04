@@ -21,7 +21,8 @@ function onMIDIInit(midi) {
 	if (MIDI.inputs().length == 0) {
 		alert("There is no MIDI device connected!!");
 	} else {
-		MIDI.inputs()[0].onmidimessage = MIDIMessageEventHandler;
+		var input = MIDI.inputs()[0];
+		input.onmidimessage = MIDIMessageEventHandler;
 	}
 }
 

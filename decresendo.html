@@ -1,19 +1,45 @@
 <html>
-	<head>
-		<script src='jquery/jquery.min.js'></script>
-		<script src='closure-library/closure/goog/base.js'></script>
-		<script src='decresendo/decresendo-deps.js'></script>
-		<script>
-			goog.require('Decresendo');
-		</script>
-	</head>
-	<body>
-		<script>
-			var loader = new Decresendo.Score.Loader(
-					'test/01a-Pitches-Pitches.xml',
-					function(result) { console.log(result); });
-			loader.load();
-		</script>
-	</body>
+
+<head>
+<script src='jquery/jquery.min.js'></script>
+<script src='closure-library/closure/goog/base.js'></script>
+<script src='decresendo/decresendo-deps.js'></script>
+<script>
+	goog.require('Decresendo');
+</script>
+</head>
+
+<body>
+
+<script>
+
+var loader = new Decresendo.Score.Loader(
+	'test/01a-Pitches-Pitches.xml',
+	function(result) { console.log(result); });
+loader.load();
+
+var MIDI = Decresendo.MIDI;
+var MIDIInput = null;
+var MIDIOutput = null;
+
+MIDI.Init(onMIDIInit, onMIDIFail);
+
+function onMIDIInit() {
+	MIDIInput = MIDI.getInput();
+	MIDIOutput = MIDI.getOutput();
+	MIDI.setMIDIEventHandler(MIDIInput, MIDIEventHandler);
+}
+
+function onMIDIFail(message) {
+	alert(message);
+}
+
+function MIDIEventHandler(event) {
+	MIDIOutput.send(event.data);
+}
+
+</script>
+
+</body>
 </html>
 
