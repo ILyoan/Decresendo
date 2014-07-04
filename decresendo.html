@@ -1,20 +1,22 @@
 <html>
 
 <head>
-<script src='jquery/jquery.min.js'></script>
-<script src='closure-library/closure/goog/base.js'></script>
-<script src='decresendo/decresendo-deps.js'></script>
+<script src="jquery/jquery.min.js"></script>
+<script src="closure-library/closure/goog/base.js"></script>
+<script src="decresendo/decresendo-deps.js"></script>
 <script>
-	goog.require('Decresendo');
+	goog.require("Decresendo");
 </script>
 </head>
 
 <body>
 
+<canvas id="piano"></canvas>
+
 <script>
 
 var loader = new Decresendo.Score.Loader(
-	'test/01a-Pitches-Pitches.xml',
+	"test/01a-Pitches-Pitches.xml",
 	function(result) { console.log(result); });
 loader.load();
 
@@ -37,6 +39,13 @@ function onMIDIFail(message) {
 function MIDIEventHandler(event) {
 	MIDIOutput.send(event.data);
 }
+
+var pianoCanvas = document.getElementById("piano");
+var pianoContext = pianoCanvas.getContext("2d");
+var pianoRender = new Decresendo.Render.Piano(pianoContext, 5);
+pianoCanvas.width = pianoRender.width;
+pianoCanvas.height = pianoRender.height;
+pianoRender.draw();
 
 </script>
 
