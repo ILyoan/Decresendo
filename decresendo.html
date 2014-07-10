@@ -16,9 +16,19 @@
 <script>
 
 var loader = new Decresendo.Score.Loader(
-	"test/01a-Pitches-Pitches.xml",
-	function(result) { console.log(result); });
+	"./test/01a-Pitches-Pitches.xml",
+	onScoreLoadSuccess,
+	onScoreLoadError);
 loader.load();
+
+function onScoreLoadSuccess(data, textStatus, jqXHR) {
+	var score = new Decresendo.Score.Score(data);
+	console.log(score);
+}
+
+function onScoreLoadError(jqXHR, textStatus, errorThrown) {
+	alert("score load failed: " + errorThrown);
+}
 
 var MIDI = Decresendo.MIDI;
 var MIDIInput = null;

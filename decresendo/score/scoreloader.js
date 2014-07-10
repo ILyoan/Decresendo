@@ -2,19 +2,20 @@ goog.provide('Decresendo.Score.Loader');
 goog.require('Decresendo');
 goog.require('Decresendo.Score');
 
-Decresendo.Score.Loader = function(url, onSuccess, onError) {
+var Loader = function(url, onSuccess, onError) {
 	this.url = url;
 	this.ext = (/.*\.mxl$/.test(this.url) ? 'mxl' : 'xml');
 	this.onSuccess = onSuccess;
 	this.onError = onError;
 };
 
-Decresendo.Score.Loader.MIMETypes = {
+
+Loader.MIMETypes = {
 	MIME_MXL: 'application/vnd.recordare.musicxml',
 	MIME_XML: 'application/vnd.recordare.musicxml+xml'
 };
 
-Decresendo.Score.Loader.prototype.getMIMEType = function() {
+Loader.prototype.getMIMEType = function() {
 	if (this.ext === 'mxl') {
 		return Decresendo.Score.Loader.MIMETypes.MIME_MXL;
 	} else {
@@ -22,8 +23,7 @@ Decresendo.Score.Loader.prototype.getMIMEType = function() {
 	}
 };
 
-Decresendo.Score.Loader.prototype.load = function() {
-	console.log(this.url);
+Loader.prototype.load = function() {
 	$.ajax({
 		'url': this.url,
 		'type': 'GET',
@@ -33,3 +33,6 @@ Decresendo.Score.Loader.prototype.load = function() {
 		'error': this.onError,
 	});
 };
+
+
+Decresendo.Score.Loader = Loader;

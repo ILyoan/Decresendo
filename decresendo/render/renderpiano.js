@@ -88,10 +88,10 @@ Piano.prototype.drawBox = function() {
 	var boxHeight = this.height;
 	var keyWidth = this.keyWidth;
 
-	this.context.fillStyle = "#000000";
+	this.context.fillStyle = "#303030";
 	this.context.fillRect(0, 0, boxWidth, boxHeight);
 
-	this.context.fillStyle = "#FF0000";
+	this.context.fillStyle = "#E00000";
 	this.context.fillRect(BOX_MARGIN.left, BOX_MARGIN.top - 3, keyWidth, 3);
 };
 
