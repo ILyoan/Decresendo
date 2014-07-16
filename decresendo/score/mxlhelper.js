@@ -16,6 +16,12 @@ MXL.findPartwise = function(node) {
 	return partwise;
 };
 
+MXL.getAttribute = function(node, key, defaultValue) {
+	var value = node.node.getAttribute(key);
+	if (!value) value = defaultValue;
+	return value;
+};
+
 
 // part-wise helper
 MXL.Partwise = {};
@@ -42,6 +48,16 @@ MXL.Partwise.getPartList = function(partwise) {
 	return partList;
 };
 
+MXL.Partwise.getParts = function(partwise) {
+	var parts = [];
+	partwise.forEachChildElement(function(e) {
+		if (e.tagName == "part") {
+			parts = new Decresendo.Score.Part(e);
+		}
+	});
+	return parts;
+};
+
 
 // part-list helper
 MXL.PartList = {};
@@ -59,11 +75,38 @@ MXL.PartList.getPartList = function(partList) {
 					return true;
 				}
 			});
-			list.push(new PartInfo(partId, partName));
+			list.push(new Decresendo.Score.PartInfo(partId, partName));
 		}
 	});
 	return list;
 
 };
+
+
+// part helper
+MXL.Part = {};
+
+MXL.Part.getId = function(part) {
+	return MXL.getAttribute(part, "id");
+};
+
+MXL.Part.getMeasures = function(part) {
+	var measures = [];
+	part.forEachChildElement(function(e) {
+		if (e.tagName == "measure") {
+			measures.push(new Decresendo.Score.Measure(e));
+		}
+	});
+	return measures;
+};
+
+
+// measure helper
+MXL.Measure = {};
+
+MXL.Measure.getNumber = function(measure) {
+	return MXL.getAttribute(measure, "number");
+};
+
 
 Decresendo.MXL = MXL;

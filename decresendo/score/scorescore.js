@@ -2,6 +2,7 @@ goog.provide("Decresendo.Score.Score");
 goog.require("Decresendo.Score");
 goog.require("Decresendo.Score.Node");
 goog.require("Decresendo.Score.PartList");
+goog.require("Decresendo.Score.Part");
 goog.require("Decresendo.Score.MXL");
 
 var Score = function(data) {
@@ -13,6 +14,7 @@ var Score = function(data) {
 	this.node = this.partwise;
 	this.title = MXL.Partwise.getTitle(this);
 	this.partList = MXL.Partwise.getPartList(this);
+	this.parts = MXL.Partwise.getParts(this);
 };
 
 Decresendo.Score.Score = Score;

@@ -7,6 +7,8 @@ goog.addDependency('../../../decresendo/render/renderpiano.js', ['Decresendo.Ren
 goog.addDependency('../../../decresendo/score/mxlhelper.js', ['Decresendo.Score.MXL'], ['Decresendo.Score']);
 goog.addDependency('../../../decresendo/score/score.js', ['Decresendo.Score'], []);
 goog.addDependency('../../../decresendo/score/scoreloader.js', ['Decresendo.Score.Loader'], ['Decresendo', 'Decresendo.Score']);
+goog.addDependency('../../../decresendo/score/scoremeasure.js', ['Decresendo.Score.Measure'], ['Decresendo.MXL', 'Decresendo.Score']);
 goog.addDependency('../../../decresendo/score/scorenode.js', ['Decresendo.Score.Node'], ['Decresendo', 'Decresendo.Score']);
-goog.addDependency('../../../decresendo/score/scorepartlist.js', ['Decresendo.Score.PartInfo', 'Decresendo.Score.PartList'], ['Decresendo.Score', 'Decresendo.Score.Node']);
-goog.addDependency('../../../decresendo/score/scorescore.js', ['Decresendo.Score.Score'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.Node', 'Decresendo.Score.PartList']);
+goog.addDependency('../../../decresendo/score/scorepart.js', ['Decresendo.Score.Part'], ['Decresendo.Score', 'Decresendo.Score.MXL']);
+goog.addDependency('../../../decresendo/score/scorepartlist.js', ['Decresendo.Score.PartInfo', 'Decresendo.Score.PartList'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.Node']);
+goog.addDependency('../../../decresendo/score/scorescore.js', ['Decresendo.Score.Score'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.Node', 'Decresendo.Score.Part', 'Decresendo.Score.PartList']);
