@@ -24,6 +24,16 @@ Node.prototype.forEachChildElement = function(callback) {
 	return false;
 };
 
+Node.prototype.forChildElementWithTag = function(tag, callback) {
+	this.forEachChildElement(function(e) {
+		if (e.tagName == tag) {
+			if (callback(e)) {
+				return true;
+			}
+		}
+	});
+};
+
 Node.prototype.preorder = function(callback) {
 	if (this.node) {
 		if (callback(this.node)) return true;

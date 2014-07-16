@@ -28,32 +28,26 @@ MXL.Partwise = {};
 
 MXL.Partwise.getTitle = function(partwise) {
 	var title = "";
-	partwise.forEachChildElement(function(e) {
-		if (e.tagName == "movement-title") {
-			title = e.innerText || e.textContent;
-			return true;
-		}
+	partwise.forChildElementWithTag("movement-title", function(e) {
+		title = e.innerText || e.textContent;
+		return true;
 	});
 	return title;
 };
 
 MXL.Partwise.getPartList = function(partwise) {
 	var partList = null;
-	partwise.forEachChildElement(function(e) {
-		if (e.tagName == "part-list") {
-			partList = new Decresendo.Score.PartList(e);
-			return true;
-		}
+	partwise.forChildElementWithTag("part-list", function(e) {
+		partList = new Decresendo.Score.PartList(e);
+		return true;
 	});
 	return partList;
 };
 
 MXL.Partwise.getParts = function(partwise) {
 	var parts = [];
-	partwise.forEachChildElement(function(e) {
-		if (e.tagName == "part") {
-			parts = new Decresendo.Score.Part(e);
-		}
+	partwise.forChildElementWithTag("part", function(e) {
+		parts.push(new Decresendo.Score.Part(e));
 	});
 	return parts;
 };
@@ -64,19 +58,15 @@ MXL.PartList = {};
 
 MXL.PartList.getPartList = function(partList) {
 	var list = [];
-	partList.forEachChildElement(function(e) {
-		if (e.tagName == "score-part") {
-			var partId = e.getAttribute("id");
-			var partName = "";
-			var partNode = new Decresendo.Score.Node(e);
-			partNode.forEachChildElement(function(ee) {
-				if (ee.tagName == "part-name") {
-					partName = ee.innerText || ee.textContent;
-					return true;
-				}
-			});
-			list.push(new Decresendo.Score.PartInfo(partId, partName));
-		}
+	partList.forChildElementWithTag("score-part", function(e) {
+		var partId = e.getAttribute("id");
+		var partName = "";
+		var partNode = new Decresendo.Score.Node(e);
+		partNode.forChildElementWithTag("part-name", function(ee) {
+			partName = ee.innerText || ee.textContent;
+			return true;
+		});
+		list.push(new Decresendo.Score.PartInfo(partId, partName));
 	});
 	return list;
 
@@ -92,10 +82,8 @@ MXL.Part.getId = function(part) {
 
 MXL.Part.getMeasures = function(part) {
 	var measures = [];
-	part.forEachChildElement(function(e) {
-		if (e.tagName == "measure") {
-			measures.push(new Decresendo.Score.Measure(e));
-		}
+	part.forChildElementWithTag("measure", function(e) {
+		measures.push(new Decresendo.Score.Measure(e));
 	});
 	return measures;
 };
