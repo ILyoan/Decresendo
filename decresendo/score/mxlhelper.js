@@ -2,8 +2,9 @@ goog.provide("Decresendo.Score.MXL");
 goog.require("Decresendo.Score");
 
 
-var MXL = {};
+var modScoreMXL = function() {
 
+var MXL = {};
 
 MXL.findPartwise = function(node) {
 	var partwise = undefined;
@@ -16,10 +17,22 @@ MXL.findPartwise = function(node) {
 	return partwise;
 };
 
+MXL.getTagName = function(node) {
+	if (node && node.node) {
+		return node.node.tagName;
+	} else {
+		return "";
+	}
+};
+
 MXL.getAttribute = function(node, key, defaultValue) {
 	var value = node.node.getAttribute(key);
 	if (!value) value = defaultValue;
 	return value;
+};
+
+MXL.getText = function(e) {
+	return e.innerText || e.textContent;
 };
 
 
@@ -63,7 +76,7 @@ MXL.PartList.getPartList = function(partList) {
 		var partName = "";
 		var partNode = new Decresendo.Score.Node(e);
 		partNode.forChildElementWithTag("part-name", function(ee) {
-			partName = ee.innerText || ee.textContent;
+			partName = MXL.getText(ee);
 			return true;
 		});
 		list.push(new Decresendo.Score.PartInfo(partId, partName));
@@ -96,5 +109,63 @@ MXL.Measure.getNumber = function(measure) {
 	return MXL.getAttribute(measure, "number");
 };
 
+MXL.Measure.getMusicDatas = function(measure) {
+	var musicDatas = [];
+	measure.forEachChildElement(function(e) {
+		musicDatas.push(Decresendo.Score.MusicData.createMusicData(e));
+	});
+	return musicDatas;
+};
 
-Decresendo.MXL = MXL;
+
+// attributes helper
+MXL.Attributes = {};
+
+MXL.Attributes.getDivisions = function(attributes) {
+	var divisions = 1;
+	attributes.forChildElementWithTag("divisions", function(e) {
+		divisions = MXL.getText(e);
+		return true;
+	});
+	return divisions;
+};
+
+MXL.Attributes.getKeys = function(attributes) {
+	var keys = [];
+	attributes.forChildElementWithTag("key", function(e) {
+		console.log("found key");
+		keys.push(new Decresendo.Score.Key(e));
+	});
+	return keys;
+};
+
+MXL.Attributes.getKeyCancel = function(key) {
+	var cancel = undefined;
+	key.forChildElementWithTag("cancel", function(e) {
+		cancel = MXL.getText(e);
+		return true;
+	});
+	return cancel;
+};
+
+MXL.Attributes.getKeyFifths = function(key) {
+	var fifths = undefined;
+	key.forChildElementWithTag("fifths", function(e) {
+		fifths = MXL.getText(e);
+		return true;
+	});
+	return fifths;
+};
+
+MXL.Attributes.getKeyMode = function(key) {
+	var mode = undefined;
+	key.forChildElementWithTag("mode", function(e) {
+		mode = MXL.getText(e);
+		return true;
+	});
+	return mode;
+};
+
+Decresendo.Score.MXL = MXL;
+
+}();

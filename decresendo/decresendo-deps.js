@@ -6,9 +6,11 @@ goog.addDependency('../../../decresendo/render/render.js', ['Decresendo.Render']
 goog.addDependency('../../../decresendo/render/renderpiano.js', ['Decresendo.Render.Piano'], ['Decresendo', 'Decresendo.Render']);
 goog.addDependency('../../../decresendo/score/mxlhelper.js', ['Decresendo.Score.MXL'], ['Decresendo.Score']);
 goog.addDependency('../../../decresendo/score/score.js', ['Decresendo.Score'], []);
+goog.addDependency('../../../decresendo/score/scoreattributes.js', ['Decresendo.Score.Attributes'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.MusicData']);
 goog.addDependency('../../../decresendo/score/scoreloader.js', ['Decresendo.Score.Loader'], ['Decresendo', 'Decresendo.Score']);
-goog.addDependency('../../../decresendo/score/scoremeasure.js', ['Decresendo.Score.Measure'], ['Decresendo.MXL', 'Decresendo.Score']);
+goog.addDependency('../../../decresendo/score/scoremeasure.js', ['Decresendo.Score.Measure'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.MusicData']);
+goog.addDependency('../../../decresendo/score/scoremusicdata.js', ['Decresendo.Score.MusicData'], ['Decresendo.Score', 'Decresendo.Score.Attributes', 'Decresendo.Score.MXL']);
 goog.addDependency('../../../decresendo/score/scorenode.js', ['Decresendo.Score.Node'], ['Decresendo', 'Decresendo.Score']);
-goog.addDependency('../../../decresendo/score/scorepart.js', ['Decresendo.Score.Part'], ['Decresendo.Score', 'Decresendo.Score.MXL']);
+goog.addDependency('../../../decresendo/score/scorepart.js', ['Decresendo.Score.Part'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.Measure']);
 goog.addDependency('../../../decresendo/score/scorepartlist.js', ['Decresendo.Score.PartInfo', 'Decresendo.Score.PartList'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.Node']);
 goog.addDependency('../../../decresendo/score/scorescore.js', ['Decresendo.Score.Score'], ['Decresendo.Score', 'Decresendo.Score.MXL', 'Decresendo.Score.Node', 'Decresendo.Score.Part', 'Decresendo.Score.PartList']);

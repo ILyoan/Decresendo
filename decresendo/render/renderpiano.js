@@ -2,6 +2,8 @@ goog.provide('Decresendo.Render.Piano');
 goog.require('Decresendo');
 goog.require('Decresendo.Render');
 
+var modRenderPiano = function() {
+
 var WW = 20;
 var WH = 100;
 var BW = 12;
@@ -120,3 +122,5 @@ Key.prototype.draw = function(context, topOffset, leftOffset) {
 };
 
 Decresendo.Render.Piano = Piano;
+
+}();

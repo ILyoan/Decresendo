@@ -5,6 +5,11 @@ goog.require("Decresendo.Score.PartList");
 goog.require("Decresendo.Score.Part");
 goog.require("Decresendo.Score.MXL");
 
+
+var modScoreScore = function() {
+
+var MXL = Decresendo.Score.MXL;
+
 var Score = function(data) {
 	var supperclass = Score.supperclass;
 	supperclass.constructor.call(this, data);
@@ -22,3 +27,4 @@ Decresendo.inherited(
 	Decresendo.Score.Score,
 	Decresendo.Score.Node);
 
+}();
