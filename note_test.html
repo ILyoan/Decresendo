@@ -1,0 +1,40 @@
+<html>
+<body>
+<script type='text/javascript'>
+
+var MIDI = null;
+
+window.onload = function() {
+	InitMIDIDevice();
+}
+
+function InitMIDIDevice() {
+	if (navigator.requestMIDIAccess) {
+		navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+	} else {
+		alert("Your browser doesn't support MIDI device!!");
+	}
+}
+
+function onMIDIInit(midi) {
+	MIDI = midi;
+	if (MIDI.inputs().length == 0) {
+		alert("There is no MIDI device connected!!");
+	} else {
+		var input = MIDI.inputs()[0];
+		input.onmidimessage = MIDIMessageEventHandler;
+	}
+}
+
+function onMIDIReject() {
+	alert("The MIDI system failed to start.");
+}
+
+function MIDIMessageEventHandler(event) {
+	MIDI.outputs()[0].send(event.data);
+}
+
+</script>
+
+</body>
+</html>
