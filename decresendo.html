@@ -30,24 +30,23 @@ function onScoreLoadError(jqXHR, textStatus, errorThrown) {
 	alert("score load failed: " + errorThrown);
 }
 
-var MIDI = Decresendo.MIDI;
-var MIDIInput = null;
-var MIDIOutput = null;
 
-MIDI.Init(onMIDIInit, onMIDIFail);
+var midi = null;
+Decresendo.MIDI.Init(onMIDIInit, onMIDIFail);
 
 function onMIDIInit() {
-	MIDIInput = MIDI.getInput();
-	MIDIOutput = MIDI.getOutput();
-	MIDI.setMIDIEventHandler(MIDIInput, MIDIEventHandler);
+	midi = new Decresendo.MIDI(
+			Decresendo.MIDI.getInput(),
+			Decresendo.MIDI.getOutput());
+	midi.addEventHandler(MIDIEventHandler);
 }
 
 function onMIDIFail(message) {
 	alert(message);
 }
 
-function MIDIEventHandler(event) {
-	MIDIOutput.send(event.data);
+function MIDIEventHandler(midi, event) {
+	midi.output.send(event.data);
 }
 
 var pianoCanvas = document.getElementById("piano");
