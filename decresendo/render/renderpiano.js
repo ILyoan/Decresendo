@@ -16,9 +16,10 @@ var BOX_MARGIN = {
 	right: 10,
 };
 
-var Piano = function(context, octaves) {
+var Piano = function(context, octaves, startOctave) {
 	this.context = context;
 	this.octaves = octaves;
+	this.startOctave = startOctave ? startOctave : 2;
 	this.keys = [];
 	var i = 0;
 	for (i = 0; i < this.octaves * 12 + 1; ++i) this.keys[i] = new Key(i);
@@ -36,7 +37,7 @@ var Key = function(id) {
 	this.width = this.isWhite ? WW : BW;
 	this.height = this.isWhite ? WH : BH;
 	this.offset = getOffset(this.octave, this.inoctave);
-	this.pushed = false;
+	this.pressed = false;
 };
 
 var isWhite = function(inoctave) {
@@ -71,11 +72,13 @@ var getOffset = function(octave, inoctave) {
 
 
 Piano.prototype.noteOn = function(note) {
-	this.keys[note].pushed = true;
+	var index = note - this.startOctave * 12
+	this.keys[index].pressed = true;
 };
 
 Piano.prototype.noteOff = function(note) {
-	this.keys[note].pushed = false;
+	var index = note - this.startOctave * 12
+	this.keys[index].pressed = false;
 };
 
 Piano.prototype.draw = function() {
@@ -114,8 +117,14 @@ Piano.prototype.drawKeys = function() {
 Key.prototype.draw = function(context, topOffset, leftOffset) {
 	if (this.isWhite) {
 		context.fillStyle = "#FFFFFF";
+		if (this.pressed) {
+			context.fillStyle = "#00FF00";
+		}
 	} else {
 		context.fillStyle = "#000000";
+		if (this.pressed) {
+			context.fillStyle = "#FF00FF";
+		}
 	}
 	context.fillRect(leftOffset + this.offset, topOffset, this.width, this.height);
 	context.strokeRect(leftOffset + this.offset, topOffset, this.width, this.height);

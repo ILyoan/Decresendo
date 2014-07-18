@@ -42,14 +42,14 @@ MIDI.prototype.onMIDIEvent = function(event) {
 MIDI.prototype.onNoteOnEvent = function(note, velocity) {
 	var i = 0;
 	for (i = 0; i < this.noteOnHandlers.length; ++i) {
-		this.noteOnHandlers[i](note, velocity);
+		this.noteOnHandlers[i](this, note, velocity);
 	}
 };
 
 MIDI.prototype.onNoteOffEvent = function(note) {
 	var i = 0;
 	for (i = 0; i < this.noteOffHandlers.length; ++i) {
-		this.noteOffHandlers[i](note);
+		this.noteOffHandlers[i](this, note);
 	}
 };
 
@@ -101,7 +101,6 @@ MIDI.initInput = function() {
 					}
 				}
 			}
-			if (event.data[1]) console.log(event.data[1], event.data[2]);
 		};
 	}
 };

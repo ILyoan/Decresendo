@@ -39,6 +39,8 @@ function onMIDIInit() {
 			Decresendo.MIDI.getInput(),
 			Decresendo.MIDI.getOutput());
 	midi.addEventHandler(MIDIEventHandler);
+	midi.addNoteOnHandler(MIDINoteOnHandler);
+	midi.addNoteOffHandler(MIDINoteOffHandler);
 }
 
 function onMIDIFail(message) {
@@ -49,9 +51,19 @@ function MIDIEventHandler(midi, event) {
 	midi.output.send(event.data);
 }
 
+function MIDINoteOnHandler(midi, note, velocity) {
+	pianoRender.noteOn(note);
+	pianoRender.draw();
+}
+
+function MIDINoteOffHandler(midi, note, velocity) {
+	pianoRender.noteOff(note);
+	pianoRender.draw();
+}
+
 var pianoCanvas = document.getElementById("piano");
 var pianoContext = pianoCanvas.getContext("2d");
-var pianoRender = new Decresendo.Render.Piano(pianoContext, 5);
+var pianoRender = new Decresendo.Render.Piano(pianoContext, 5, 3);
 pianoCanvas.width = pianoRender.width;
 pianoCanvas.height = pianoRender.height;
 pianoRender.draw();
